@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<!-- Latest compiled and minified CSS -->
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.css" />
+<link rel="stylesheet" type="text/css" href="styles.css"/>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/black-tie/jquery-ui.css" />
+
+</head>
+<body>
+  <div class="container-fluid">
+    <div id="whole-container">
+  <div id="header" class="row">
+    <h1><span title = "Mouseover the colorful segments to visualize users' conversion paths on GM's brand sites. Filter paths by media dimensions using the dropdowns below. Zoom into a path by clicking on it.">Session-Level Conversion Pathing</span></h1>
+  </div>
+  <div class="content row">
+    <form class="form-inline align-top">
+        <div id="filters" class="formstyle col-lg-10">
+          <div class="form-group default search display social">
+            <label for="Market">Market</label>
+              <select class="filterthis" id="market" name="Market">
+              </select>
+          </div>
+          <div class="form-group default search display social">
+            <label for="brand">Brand</label>
+              <select class="filterthis" id="brand" name="Brand">
+              </select>
+          </div>
+          <div class="form-group default search display social disableOption">
+            <label for="date">Date</label>
+              <select class="filterthis" name="Date">
+              </select>
+          </div>
+          <div class="form-group default search display social disableOption">
+            <label for="exposure">Exposure</label>
+              <select class="filterthis" id="exposure" name="Exposure">
+              </select>
+          </div>
+          <div class="form-group default search display social channeldiv">
+            <label for="channel">Channel</label>
+              <select class="filterthis" id="channel" name="Channel">
+              </select>
+          </div>
+          <div class="form-group hidden search display social devicediv">
+              <label for="device_type">Device Type</label>
+                <select class="filterthis" name="Device_Type">
+                </select>
+          </div>
+          <div class="form-group hidden search display social disableOption">
+            <label for="campaign_strategy">Strategy</label>
+              <select class="filterthis" name="Strategy">
+              </select>
+          </div>
+          <div class="form-group hidden display disableOption">
+            <label for="targeting">Targeting</label>
+              <select class="filterthis" name="Targeting">
+              </select>
+          </div>
+          <div class="form-group hidden search display social campaigndiv">
+            <label for="campaign">Campaign <input type="checkbox" name="campaigncheck" id="campaign" title = "Click to toggle views of ." class="hidden"></label>
+              <select class="filterthis" name="Campaign">
+              </select>
+          </div>
+          <div class="form-group hidden search display social">
+            <label for="reportigSite">Site</label>
+              <select class="filterthis" name="Site">
+              </select>
+          </div>
+          <div class="form-group hidden display">
+            <label for="placement">Placement</label>
+              <select class="filterthis" name="Placement" data-live-search="true">
+              </select>
+          </div>
+          <div class="form-group hidden display">
+            <label for="format">Format</label>
+              <select class="filterthis" name="Format">
+              </select>
+          </div>
+          <div class="form-group hidden display">
+            <label for="size">Size</label>
+              <select class="filterthis" name="Size">
+              </select>
+          </div>
+          <div class="form-group hidden display">
+            <label for="media_type">Media Type</label>
+              <select class="filterthis" name="Media_Type">
+              </select>
+          </div>
+          <div class="form-group hidden display">
+            <label for="creative">Creative</label>
+              <select class="filterthis" name="Creative" data-live-search="true">
+              </select>
+          </div>
+          <div class="form-group hidden search exposed">
+            <label for="keyword">Keyword</label>
+              <select class="filterthis" name="Keyword" data-live-search="true">
+              </select>
+          </div>
+        </div>
+        <div class="formstyle col-lg-2 topform">
+          <div class="form-group" id="topresults">
+            <label for="top">View Top Results</label>
+              <select id="top" name="top">
+                <option class="top" name="top" value="0">All</option>
+                <option class="top" name="top" value="5">Top Five</option>
+                <option class="top" name="top" value="10">Top Ten</option>
+                <option class="top" name="top" value="15">Top Fifteen</option>
+                <option class="top" name="top" value="20">Top Twenty</option>
+              </select>
+          </div>
+          <div class="resetGraph button" onclick="resetGraph()">RESET</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div id="main row">
+    <div id="percentage">
+    </div>
+      <div id="breadcrumb">
+        <div id="sequence"></div>
+        <div id="secondsequence"></div>
+    </div>
+    <div id="error">
+    </div>
+    <div id="chart" class="row">
+      <div id="loader" class="hidden">
+        <div id="toploader"></div>
+        <div id="bottom"></div>
+        <div id="line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div id="svgdataurl"></div>
+  <div class="legenddiv row">
+    <div class="col-lg-2">
+      <div class="togglelegend">
+        <input type="checkbox" id="togglelegend"><span>Legend</span></input>
+    </div>
+    <div class="button highest" style="visibility: hidden;">Recommended <br/> Optimal </br> Path</div>
+    <div class="button export">Export</div>
+  </div>
+    <div class="legend col-lg-9" style="visibility: hidden;">
+    </div>
+    <div class="col-lg-1">
+    </div>
+  </div>
+  <div id="footer" class="row">
+  </div>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-100984267-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.js"></script>
+<script type="text/javascript" src="scripts/ajaxscript.js"></script>
+<script type="text/javascript" src="scripts/script.js"></script>
+<script type="text/javascript" src="scripts/filters.js"></script>
+<script type="text/javascript" src="scripts/export.js"></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+     $('.selectpicker').selectpicker();
+    });
+</script>
+
+</body>
+</html>
